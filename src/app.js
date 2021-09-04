@@ -9,10 +9,6 @@ app.use(express.json())
 const db = require('./data/database')
 db.connect()
 
-router.get("/oi", (req, res)=>{
-    res.status(200).send({"mensagem":"oi to aqui ta funcionando "})
-})
-
 
 const culturalRouter = require('./routes/culturalRouter')
 app.use('/cultural', culturalRouter)
