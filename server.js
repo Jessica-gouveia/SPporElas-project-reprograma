@@ -1,6 +1,6 @@
 const app = require('./src/app')
-const port = process.env.PORT || 4000
+const PORT = process.env.PORT || 4000
 
-app.listen(port, () => {
-    console.log(`Servidor rodando na porta ${port}`)
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`)
 })
