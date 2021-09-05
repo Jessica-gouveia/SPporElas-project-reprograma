@@ -8,3 +8,5 @@ router.get('/', controller.getAll)
 
 router.post('/cadastrar', controller.createItinerary)
 module.exports = router
+
+router.delete('/:id', controller.deleteItinerary)
