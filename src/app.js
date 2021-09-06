@@ -10,7 +10,7 @@ const db = require('./data/database')
 db.connect()
 
 const indexRouter = require('./routes/index')
-app.use('/index', indexRouter)
+app.use('/', indexRouter)
 
 const culturalRouter = require('./routes/culturalRouter')
 app.use('/cultural', culturalRouter)
