@@ -21,13 +21,10 @@ const createItinerary = async (req,res) => {
         profissao: req.body.profissao,
         biografia: req.body.biografia,
         foto: req.body.foto,
-        museuUm: req.body.museuUm,
-        museuDois: req.body.museuDois,
-        museuTres: req.body.museuTres,
-        teatro: req.body.teatro,
-        parque: req.body.parque,
+        roteiro: req.body.roteiro,
         criadoEm: req.body.criadoEm
     })
+    
     const itineraryAlreadyExists = await Itinerary.findOne({nome: req.body.nome})
     if(itineraryAlreadyExists) {
         return res.status(404).json({error: 'Itinerary already registered'})
@@ -39,7 +36,7 @@ const createItinerary = async (req,res) => {
         res.status(400).json({message: error.message})
 
     }
-}
+} // FALTA COMPLETAR COM FOREACH P PERCORRER O ARRAY P ADD O ITINERÁRIO
 
 const updateOne = async (req, res) => {
     try {
