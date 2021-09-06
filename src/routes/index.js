@@ -8,3 +8,5 @@ router.get('/', (req,res) => {
         'message': 'Existe sim amor em SP <3 '
     })
 })
+
+module.exports = router

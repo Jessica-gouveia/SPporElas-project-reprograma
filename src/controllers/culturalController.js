@@ -6,7 +6,13 @@ const getAll = async (req,res) => {
     res.status(200).json(cultureTour)
 }
 
-//const getById = 
+const getById = async (req,res) => {
+    const requestedId = req.params.id 
+    const filteredId = Tour.find(tour => tour.id == requestedId)
+
+    res.status(200).send(filteredId)
+
+}
 
 const createItinerary = async (req,res) => {
     const itinerary = new Itinerary ({
@@ -29,9 +35,25 @@ const createItinerary = async (req,res) => {
     try{
         const newItinerary = await itinerary.save()
         res.status(200).json(newItinerary)
-    } catch (err) {
-        res.status(400).json({message: err.message})
+    } catch (error) {
+        res.status(400).json({message: error.message})
 
+    }
+}
+
+const updateOne = async (req, res) => {
+    try {
+        const itinerary = await Itinerary.findById(req.params.id)
+        if(itinerary == null) {
+            return res.status(404).json({'message': 'Itinerary not found'})
+        }
+        if(req.body.nome != null) {
+            itinerary.nome = req.body.nome
+        }
+        const updatedItinerary = await itinerary.save()
+        res.status(200).json(updatedItinerary)
+    } catch (error) {
+        res.status(500).json({'message': error.message})
     }
 }
 
@@ -50,4 +72,4 @@ const deleteItinerary = async (req,res) => {
         res.status(500).json({'message': 'error.message'})
     }
 }
-module.exports = {getAll, createItinerary, deleteItinerary}
+module.exports = {getAll, getById, createItinerary, updateOne, deleteItinerary}

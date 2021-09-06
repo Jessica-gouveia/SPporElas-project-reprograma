@@ -4,9 +4,12 @@ const controller = require('../controllers/culturalController')
 
 router.get('/', controller.getAll)
 
-//router.get('/:id', controller.getById)
+router.get('/:id', controller.getById)
 
 router.post('/cadastrar', controller.createItinerary)
-module.exports = router
+
+router.patch('/:id', controller.updateOne)
 
 router.delete('/:id', controller.deleteItinerary)
+
+module.exports = router
