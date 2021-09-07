@@ -65,7 +65,7 @@ const culturalSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    roteiro: [{
+    museus: [{
         nome: {
             type: String,
             required: true,
@@ -78,11 +78,41 @@ const culturalSchema = new mongoose.Schema({
             type: String,
             required: true,
         },
-        id: {
+        
+    }],
+
+    teatro: [{
+        nome: {
+            type: String,
+            required: true,
+        },
+        endereco: {
+            type: String,
+            required: true,
+        },
+        funcionamento: {
+            type: String,
+            required: true,
+        },
+
+    }],
+
+    parque: [{
+        nome: {
+            type: String,
+            required: true,
+        },
+        endereco: {
+            type: String,
+            required: true,
+        },
+        funcionamento: {
             type: String,
             required: true,
         },
     }],
+
+
 })
 
 module.exports = mongoose.model('cultural', culturalSchema)

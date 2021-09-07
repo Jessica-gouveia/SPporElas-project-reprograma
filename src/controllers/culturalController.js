@@ -21,7 +21,9 @@ const createItinerary = async (req,res) => {
         profissao: req.body.profissao,
         biografia: req.body.biografia,
         foto: req.body.foto,
-        roteiro: req.body.roteiro,
+        museus: req.body.museus,
+        teatro: req.body.teatro,
+        parque: req.body.parque,
         criadoEm: req.body.criadoEm
     })
     
@@ -36,7 +38,36 @@ const createItinerary = async (req,res) => {
         res.status(400).json({message: error.message})
 
     }
-} // FALTA COMPLETAR COM FOREACH P PERCORRER O ARRAY P ADD O ITINERÁRIO
+
+    //INCLUINDO ROTEIRO DE MUSEUS NO ITINERÁRIO
+    const museumItinerary = async (req,res) => {
+        try {
+            const museumInsert = await Itinerary.findById(req.params.id)
+            if(museumInsert == null) {
+                return res.status(400).json({'message': 'Itinerary not found'})
+            }
+            const museum = ({
+                nome: req.body.nome,
+                endereco: req.body.endereco,
+                funcionamento: req.body.funcionamento
+            })
+    
+            Itinerary.forEach(tour => {
+                let sameMuseum = tour == museumInsert
+                if(sameMuseum) {
+                    Itinerary.museus = museumRoute
+                }
+            })
+            res.status(200).send({'message': 'Museum successfully added', museumRoute})
+        } catch(error) {
+            res.status(500).json({'message': 'error.message'})
+        }
+
+        
+    }
+
+    
+} 
 
 const updateOne = async (req, res) => {
     try {
