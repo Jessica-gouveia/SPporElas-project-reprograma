@@ -68,9 +68,6 @@ const createItinerary = async (req,res) => {
 }
 
 
-
-
-
 const theaterIncluding = async (req,res) => {
     try {
         const theaterInsert = await Itinerary.findById(req.params.id)
@@ -132,6 +129,22 @@ const updateOne = async (req, res) => {
     }
 }
 
+const updateAnything = async (req,res) => {
+    const itinerary = await Itinerary.findById(req.params.id)
+    if(itinerary == null) {
+        return res.status(404).json({'message': 'Information not found'})
+    }
+    const updateItinerary = req.body
+    if(updateItinerary != null) {
+        let keyList = Object.keys(updateItinerary)
+        keyList.forEach((update) => {
+            itinerary[update] = updatedItinerary[update]
+        })
+    }
+    const itineraryUpdated = await itinerary.save()
+    res.status(200).json({itineraryUpdated})
+}
+
 const deleteItinerary = async (req,res) => {
     const cultureTour = await Tour.findById(req.params.id)
     if(cultureTour == null) {
@@ -147,4 +160,4 @@ const deleteItinerary = async (req,res) => {
         res.status(500).json({'message': 'error.message'})
     }
 }
-module.exports = {getAll, getById, createItinerary, updateOne, deleteItinerary}
+module.exports = {getAll, getById, createItinerary, updateOne, updateAnything, deleteItinerary}
