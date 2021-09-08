@@ -1,14 +1,14 @@
 const mongoose = require('mongoose')
-const Tour = require('../models/cultural')
+const Itinerary = require('../models/cultural')
 
 const getAll = async (req,res) => {
-    const cultureTour = await Tour.find()
+    const cultureTour = await Itinerary.find()
     res.status(200).json(cultureTour)
 }
 
 const getById = async (req,res) => {
     const requestedId = req.params.id 
-    const filteredId = Tour.find(tour => tour.id == requestedId)
+    const filteredId = Itinerary.find(it => it.id == requestedId)
 
     res.status(200).send(filteredId)
 
@@ -40,34 +40,81 @@ const createItinerary = async (req,res) => {
     }
 
     //INCLUINDO ROTEIRO DE MUSEUS NO ITINERÁRIO
-    const museumItinerary = async (req,res) => {
+    const museumIncluding = async (req,res) => {
         try {
             const museumInsert = await Itinerary.findById(req.params.id)
             if(museumInsert == null) {
                 return res.status(400).json({'message': 'Itinerary not found'})
-            }
-            const museum = ({
-                nome: req.body.nome,
-                endereco: req.body.endereco,
-                funcionamento: req.body.funcionamento
-            })
-    
-            Itinerary.forEach(tour => {
-                let sameMuseum = tour == museumInsert
-                if(sameMuseum) {
-                    Itinerary.museus = museumRoute
-                }
-            })
-            res.status(200).send({'message': 'Museum successfully added', museumRoute})
-        } catch(error) {
-            res.status(500).json({'message': 'error.message'})
-        }
+            } else{
+                 Itinerary.findByIdAndUpdate(
+        
+                   {_id: req.body.id},
+                   {...museumIncluding},
+                    {$push: {museus:req.body.museus}})
+                   Itinerary.populate('museus')
+                   res.status(200).json({'message': 'Museum successfully added to itinerary', museumInsert})
+                    
+
+            } 
+            
 
         
-    }
+        }
 
+    catch (error) {
+        res.status(500).json({'message': error.message})
+    }
     
-} 
+}
+
+
+
+
+
+const theaterIncluding = async (req,res) => {
+    try {
+        const theaterInsert = await Itinerary.findById(req.params.id)
+        if(theaterInsert == null) {
+            return res.status(400).json({'message': 'Itinerary not found'})
+        } else {
+            Itinerary.findByIdAndUpdate(
+                {_id: req.body.id},
+                {...theaterIncluding},
+                {$push: {teatro: req.body.teatro}})
+                Itinerary.populate('teatro')
+                res.status(200).json({'message': 'Theater successfully added to itinerary', theaterInsert})
+            
+        }
+    }
+    catch (error) {
+        res.status(500).json({'message': error.message})
+    }
+}
+
+// ADICIONAR PARQUE AO ITINERÁRIO
+const parkIncluding = async (req,res) => {
+    try{
+        const parkInsert = await Itinerary.findById(req.res.id)
+        if(parkInsert == null) {
+            return res.status(400).json({'message': 'Itinerary not found'})
+        } else {
+            Itinerary.findByIdAndUpdate(
+                {_id: req.body.id},
+                {...parkIncluding},
+                {$push: {parque: req.body.parque}})
+                Itinerary.populate('parque')
+                res.status(200).json({'message': 'Park succesfully added to itinerary', parkInsert})
+              
+        }
+    }
+    catch (error) {
+        res.status(500).json({'message': error.message})
+    }
+}
+
+}
+
+
 
 const updateOne = async (req, res) => {
     try {
