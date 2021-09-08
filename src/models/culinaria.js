@@ -15,10 +15,6 @@ const culinariaSchema = new mongoose.Schema({
             type: String,
             required: true,
         },
-        id: {
-            type: String,
-            required: true,
-        },
         cultural: {
             type: mongoose.Schema.Types.ObjectId,
             required: true,
