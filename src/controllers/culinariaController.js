@@ -2,6 +2,8 @@ const mongoose = require('mongoose')
 
 const Food = require('../models/culinaria')
 
+const Itinerary = require('../models/cultural')
+
 const getAll = async (req,res) => {
     const foodPlaces = await Food.find().populate('cultural')
     res.status(200).json(foodPlaces)
