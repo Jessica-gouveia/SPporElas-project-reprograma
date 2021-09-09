@@ -9,6 +9,12 @@ const getAll = async (req,res) => {
     res.status(200).json(foodPlaces)
 }
 
+const getAllLaerte = async (req,res) => {
+    const foodPlaces = await Food.find().populate('cultural')
+    const filteredFood = women.filter(woman => woman.cultural.nome == 'Laerte Coutinho')
+    res.status(200).json(filteredFood)
+}
+
 const getById = async (req,res) => {
     const requestedId = req.params.id 
     const filteredId = await Food.find({id: requestedId})
@@ -97,6 +103,12 @@ const deleteRestaurant = async (req,res) => {
 }
 
 
-module.exports = {getAll, getById, createRestaurant, updateAnythingRestaurant, deleteRestaurant}
+module.exports = {
+     getAll,
+     getAllLaerte,
+     getById,
+     createRestaurant,
+     updateAnythingRestaurant,
+     deleteRestaurant}
 
 // LEMBRETEEEEEEEE COLOCAR A ROTA DAS MULHERES AQUI!
