@@ -98,3 +98,5 @@ const deleteRestaurant = async (req,res) => {
 
 
 module.exports = {getAll, getById, createRestaurant, updateAnythingRestaurant, deleteRestaurant}
+
+// LEMBRETEEEEEEEE COLOCAR A ROTA DAS MULHERES AQUI!
