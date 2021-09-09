@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const Food = require('../models/culinaria')
 
-const Itinerary = require('../models/cultural')
+const itinerary = require('../models/cultural')
 
 const getAll = async (req,res) => {
     const foodPlaces = await Food.find().populate('cultural')
@@ -11,13 +11,13 @@ const getAll = async (req,res) => {
 
 const getAllLaerte = async (req,res) => {
     const foodPlaces = await Food.find().populate('cultural')
-    const filteredFood = foodPlaces.filter(foodp => foodp.cultural.nome == 'Laerte')
+    const filteredFood = foodPlaces.filter(food => food.itinerary.nome == 'Laerte')
     res.status(200).json(filteredFood)
 }
 
 const getAllRaquel = async (req,res) => {
     const foodPlaces = await Food.find().populate('cultural')
-    const filteredFood = foodPlaces.filter(foodp => foodp.cultural.nome == 'Raquel')
+    const filteredFood = foodPlaces.filter(food => food.itinerary.nome == 'Raquel')
     res.status(200).json(filteredFood)
 }
 
