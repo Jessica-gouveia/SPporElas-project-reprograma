@@ -8,7 +8,12 @@ const getAll = async (req,res) => {
 
 const getById = async (req,res) => {
     const requestedId = req.params.id 
-    const filteredId = Itinerary.find(it => it.id == requestedId)
+    const filteredId =  await Itinerary.find({id: requestedId})
+    if(filteredId) {
+        res.json(filteredId)
+    } else{
+        res.status(404).json({'message': 'ID not found'})
+    }
 
     res.status(200).send(filteredId)
 
