@@ -67,7 +67,7 @@ const createItinerary = async (req,res) => {
     
 }
 
-
+// ADICIONAR TEATRO NO ITINERÁRIO
 const theaterIncluding = async (req,res) => {
     try {
         const theaterInsert = await Itinerary.findById(req.params.id)
@@ -112,7 +112,6 @@ const parkIncluding = async (req,res) => {
 }
 
 
-
 const updateOne = async (req, res) => {
     try {
         const itinerary = await Itinerary.findById(req.params.id)
@@ -146,7 +145,7 @@ const updateAnything = async (req,res) => {
 }
 
 const deleteItinerary = async (req,res) => {
-    const cultureTour = await Tour.findById(req.params.id)
+    const cultureTour = await Itinerary.findById(req.params.id)
     if(cultureTour == null) {
         return res.status(404).json({'message': 'Itinerary not found'})
         
@@ -157,7 +156,7 @@ const deleteItinerary = async (req,res) => {
         res.status(200).json({'message': 'Itinerary successfully deleted!'})
 
     } catch (error) {
-        res.status(500).json({'message': 'error.message'})
+        res.status(500).json({'message': error.message})
     }
 }
 module.exports = {getAll, getById, createItinerary, updateOne, updateAnything, deleteItinerary}

@@ -9,6 +9,14 @@ const getAll = async (req,res) => {
     res.status(200).json(foodPlaces)
 }
 
+const getById = async (req,res) => {
+    const requestedId = req.params.id 
+    const filteredId = Food.find(eat => eat.id == requestedId)
+
+    res.status(200).send(filteredId)
+
+}
+
 const createRestaurant = async (req,res) => {
     const restaurants = new Restaurant ({
         _id: new mongoose.Types.ObjectId(),
@@ -30,7 +38,7 @@ const createRestaurant = async (req,res) => {
     } catch (error) {
         res.status(400).json({'message': error.message})
     }
-
+// INCLUIR LISTA DE RESTAURANTES  
     const restaurantIncluding = async (req,res) => {
         try {
             const restaurantInsert = await Food.findById(req.params.id)
@@ -53,4 +61,35 @@ const createRestaurant = async (req,res) => {
 
 }
 
-module.exports = {getAll, createRestaurant}
+const updateAnythingRestaurant = async (req,res) => {
+    const food = await Food.findById(req.params.id)
+    if(food == null) {
+        return res.status(404).json({'message': 'Information not found, please try again'})
+    }
+    const updateFood = req.body
+    if(updateFood != null) {
+        let keyList = Object.keys(updateFood)
+        keyList.forEach((update) => {
+            food[update] = updateFood[update]
+        })
+    }
+    const restaurantUpdated = await food.save()
+    res.status(200).json({restaurantUpdated})
+}
+
+const deleteRestaurant = async (req,res) => {
+    const foodPlaces = await Food.findById(req.params.id)
+    if(foodPlaces == null) {
+        return res.status(404).json({'message': 'Restaurant not found'})
+    }
+
+    try{
+        await foodPlaces.remove()
+        res.status(200).json({'message': 'Restaurant succesfully deleted!'})
+    } catch (error) {
+        res.status(500).json({'message': error.message})
+    }
+}
+
+
+module.exports = {getAll, getById, createRestaurant, updateAnythingRestaurant, deleteRestaurant}
