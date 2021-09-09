@@ -45,7 +45,7 @@ const createRestaurant = async (req,res) => {
 
     })
 
-    const restaurantAlreadyExists = await Food.findOne({nome: req.body.nome})
+    const restaurantAlreadyExists = await itinerary.findOne({nome: req.body.nome})
     if(restaurantAlreadyExists) {
         return res.status(404).json({error: 'Restaurant already registered'})
     }
