@@ -9,7 +9,7 @@ const getAll = async (req,res) => {
     res.status(200).json(foodPlaces)
 }
 
-const getAllLaerte = async (req,res) => {
+/* const getAllLaerte = async (req,res) => {
     const foodPlaces = await Culinaria.find().populate('cultural')
     const filteredFood = foodPlaces.filter(foodPlace => foodPlace.itinerary.nome == 'Laerte' )
     res.status(200).json(filteredFood)
@@ -19,7 +19,7 @@ const getAllRaquel = async (req,res) => {
     const foodPlaces = await Culinaria.find().populate('cultural')
     const filteredFood = foodPlaces.filter(food => food.itinerary.nome == 'Raquel')
     res.status(200).json(filteredFood)
-}
+} */
 
 const getById = async (req,res) => {
     const requestedId = req.params.id 
@@ -134,8 +134,6 @@ const deleteRestaurant = async (req,res) => {
 
 module.exports = {
      getAll,
-     getAllLaerte,
-     getAllRaquel,
      getById,
      createRestaurant,
      updateAnythingRestaurant,
