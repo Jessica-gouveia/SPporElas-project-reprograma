@@ -3,8 +3,7 @@ const router = express.Router()
 const controller = require('../controllers/culinariaController')
 
 router.get('/', controller.getAll)
-//router.get('/laerte', controller.getAllLaerte)
-//router.get('/raquel', controller.getAllRaquel)
+
 router.get('/:id', controller.getById)
 
 router.post('/cadastrar', controller.createRestaurant)

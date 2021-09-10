@@ -44,7 +44,6 @@ const createItinerary = async (req,res) => {
 
     }
 
-    //INCLUINDO ROTEIRO DE MUSEUS NO ITINERÁRIO
     const museumIncluding = async (req,res) => {
         try {
             const museumInsert = await Itinerary.findById(req.params.id)
@@ -72,7 +71,6 @@ const createItinerary = async (req,res) => {
     
 }
 
-// ADICIONAR TEATRO NO ITINERÁRIO
 const theaterIncluding = async (req,res) => {
     try {
         const theaterInsert = await Itinerary.findById(req.params.id)
@@ -93,7 +91,6 @@ const theaterIncluding = async (req,res) => {
     }
 }
 
-// ADICIONAR PARQUE AO ITINERÁRIO
 const parkIncluding = async (req,res) => {
     try{
         const parkInsert = await Itinerary.findById(req.res.id)
@@ -115,7 +112,6 @@ const parkIncluding = async (req,res) => {
 }
 
 }
-
 
 const updateOne = async (req, res) => {
     try {

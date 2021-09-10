@@ -82,7 +82,7 @@ const culturalSchema = new mongoose.Schema({
 
 const cultural = mongoose.model('cultural', culturalSchema)
 module.exports = cultural
-//module.exports = mongoose.model('cultural', culturalSchema)
+
 
 
 

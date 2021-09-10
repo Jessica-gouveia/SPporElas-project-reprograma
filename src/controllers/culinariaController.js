@@ -2,24 +2,10 @@ const mongoose = require('mongoose')
 
 const Culinaria = require('../models/culinaria')
 
-const itinerary = require('../models/cultural')
-
 const getAll = async (req,res) => {
     const foodPlaces = await Culinaria.find().populate('cultural')
     res.status(200).json(foodPlaces)
 }
-
-/* const getAllLaerte = async (req,res) => {
-    const foodPlaces = await Culinaria.find().populate('cultural')
-    const filteredFood = foodPlaces.filter(foodPlace => foodPlace.itinerary.nome == 'Laerte' )
-    res.status(200).json(filteredFood)
-}
-
-const getAllRaquel = async (req,res) => {
-    const foodPlaces = await Culinaria.find().populate('cultural')
-    const filteredFood = foodPlaces.filter(food => food.itinerary.nome == 'Raquel')
-    res.status(200).json(filteredFood)
-} */
 
 const getById = async (req,res) => {
     const requestedId = req.params.id 
@@ -38,18 +24,10 @@ const createRestaurant = async (req,res) => {
     const culinarias = new Culinaria ({
         _id: new mongoose.Types.ObjectId(),
         restaurantes: req.body.restaurantes,
-        //nome: req.body.nome,
-        //endereco: req.body.endereco,
-        //funcionamento: req.body.funcionamento,
-        //criadoEm: req.body.criadoEm,
         cultural: req.body.cultural
 
     })
 
-    /* const restaurantAlreadyExists = await Culinaria.findById({_id: req.params.id})
-    if(restaurantAlreadyExists) {
-        return res.status(404).json({error: 'Restaurant already registered'})
-    } */
     try{
         const newRestaurant = await culinarias.save()
         res.status(200).json(newRestaurant)
@@ -57,27 +35,7 @@ const createRestaurant = async (req,res) => {
         res.status(400).json({'message': err.message})
     }
 // INCLUIR LISTA DE RESTAURANTES  
- /* Culinaria.findOne({_id: requiredId}, function (err, restaurantFound){
-     if(err) {
-         res.status(500).send({'message': err.message})
-     } else {
-         if(restaurantFound) {
-             if(err) {
-                 res.status(500).send({'message': err.message})
-             }else {
-                 restaurantFound.restaurantes.push(restaurantes)
-                 Culinaria.updateOne({_id: requiredId}, {$set: {restaurantes: restaurantFound.restaurantes}}, function (err){
-                     if(err) {
-                         res.status(500).send({'message': err.message})
-                     }
-                     res.status(200).send({'message': 'Restaurant sucessfully added!', ...restaurantFound.toJSON()})
-                 })
-             }
-         }else {
-             res.status(404).send({'message': 'Nothing to added'})
-         }
-     }
- }) */
+ 
       const restaurantIncluding = async (req,res) => {
         try {
             const restaurantInsert = await Culinaria.findById(req.parms.id)
