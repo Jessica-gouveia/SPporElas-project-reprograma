@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const Culinaria = require('../models/culinaria')
 
-const itinerary = require('../models/cultural')
+const {Itinerary} = require('../models/cultural')
 
 const getAll = async (req,res) => {
     const foodPlaces = await Culinaria.find().populate('cultural')
@@ -11,7 +11,7 @@ const getAll = async (req,res) => {
 
 const getAllLaerte = async (req,res) => {
     const foodPlaces = await Culinaria.find().populate('cultural')
-    const filteredFood = foodPlaces.filter(food => food.itinerary.nome == 'Laerte')
+    const filteredFood = foodPlaces.filter(itinerary => itinerary.Itinerary.nome == 'Laerte' )
     res.status(200).json(filteredFood)
 }
 
@@ -141,4 +141,4 @@ module.exports = {
      updateAnythingRestaurant,
      deleteRestaurant}
 
-// LEMBRETEEEEEEEE COLOCAR A ROTA DAS MULHERES AQUI!
+
