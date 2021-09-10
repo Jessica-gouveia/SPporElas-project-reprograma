@@ -65,7 +65,7 @@ const createRestaurant = async (req,res) => {
                 Culinaria.findByIdAndUpdate(
                     {_id: req.body.id},
                     {...restaurantIncluding},
-                    {$push: {restaurante: req.body.restaurante}})
+                    {$push: {restaurantes: req.body.restaurantes}})
                     Culinaria.populate('restaurantes')
                     res.status(200).json({'message': 'Restaurant succesfully added', restaurantInsert})
                 

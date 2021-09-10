@@ -15,17 +15,19 @@ const culinariaSchema = new mongoose.Schema({
             type: String,
             required: true,
         },
-        cultural: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'cultural'
-        },
         criadoEm: {
             type: Date,
             required: true,
             default: new Date
         }
-    }]
+    }],
+    cultural: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'cultural'
+    },
     
-},{strictPopulate: false})
+}, {versionKey: false})
 
-module.exports = mongoose.model('culinaria', culinariaSchema)
+const culinaria = mongoose.model('culinaria', culinariaSchema)
+module.exports = culinaria

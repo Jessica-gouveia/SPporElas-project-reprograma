@@ -80,7 +80,10 @@ const culturalSchema = new mongoose.Schema({
 
 })
 
-module.exports = mongoose.model('cultural', culturalSchema)
+const cultural = mongoose.model('cultural', culturalSchema)
+module.exports = cultural
+//module.exports = mongoose.model('cultural', culturalSchema)
+
 
 
 
