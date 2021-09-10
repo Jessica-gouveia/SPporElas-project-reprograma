@@ -37,28 +37,50 @@ const getById = async (req,res) => {
 const createRestaurant = async (req,res) => {
     const culinarias = new Culinaria ({
         _id: new mongoose.Types.ObjectId(),
-        nome: req.body.nome,
-        endereco: req.body.endereco,
-        funcionamento: req.body.funcionamento,
-        cultural: req.body.cultural,
-        criadoEm: req.body.criadoEm
+        restaurantes: req.body.restaurantes,
+        //nome: req.body.nome,
+        //endereco: req.body.endereco,
+        //funcionamento: req.body.funcionamento,
+        //criadoEm: req.body.criadoEm,
+        cultural: req.body.cultural
 
     })
 
-    const restaurantAlreadyExists = await Culinaria.findOne({nome: req.body.nome})
+    /* const restaurantAlreadyExists = await Culinaria.findById({_id: req.params.id})
     if(restaurantAlreadyExists) {
         return res.status(404).json({error: 'Restaurant already registered'})
-    }
+    } */
     try{
-        const newRestaurant = await Culinaria.save()
+        const newRestaurant = await culinarias.save()
         res.status(200).json(newRestaurant)
-    } catch (error) {
-        res.status(400).json({'message': error.message})
+    } catch (err) {
+        res.status(400).json({'message': err.message})
     }
 // INCLUIR LISTA DE RESTAURANTES  
-    const restaurantIncluding = async (req,res) => {
+ /* Culinaria.findOne({_id: requiredId}, function (err, restaurantFound){
+     if(err) {
+         res.status(500).send({'message': err.message})
+     } else {
+         if(restaurantFound) {
+             if(err) {
+                 res.status(500).send({'message': err.message})
+             }else {
+                 restaurantFound.restaurantes.push(restaurantes)
+                 Culinaria.updateOne({_id: requiredId}, {$set: {restaurantes: restaurantFound.restaurantes}}, function (err){
+                     if(err) {
+                         res.status(500).send({'message': err.message})
+                     }
+                     res.status(200).send({'message': 'Restaurant sucessfully added!', ...restaurantFound.toJSON()})
+                 })
+             }
+         }else {
+             res.status(404).send({'message': 'Nothing to added'})
+         }
+     }
+ }) */
+      const restaurantIncluding = async (req,res) => {
         try {
-            const restaurantInsert = await Culinaria.findById(req.params.id)
+            const restaurantInsert = await Culinaria.findById(req.parms.id)
             if(restaurantInsert == null) {
                 return res.status(400).json({'message': 'Restaurant not found'})
             } else {
@@ -71,11 +93,12 @@ const createRestaurant = async (req,res) => {
                 
             }
         }
-        catch (error) {
-            res.status(500).json({'message': error.message})
-        }
+        catch (err) {
+            res.status(500).json({'message': err.message})
+        } 
     }
-
+ 
+    
 }
 
 const updateAnythingRestaurant = async (req,res) => {
