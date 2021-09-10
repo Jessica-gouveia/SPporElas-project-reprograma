@@ -18,8 +18,8 @@ app.use('/cultural', culturalRouter)
 const culinariaRouter = require('./routes/culinariaRouter')
 app.use('/culinaria', culinariaRouter)
 
-/* const usuariaRouter = require('./routes/usuariaRouter')
-app.use('/usuaria', usuariaRouter) */
+ const usuariaRouter = require('./routes/usuariaRouter')
+app.use('/usuaria', usuariaRouter) 
 
 module.exports = app
 

@@ -1,6 +1,18 @@
-/* const express = require('express')
-const router = express.Router()
-const controller = require('../controllers/usuariaController')
+const mongoose = require('mongoose')
 
-module.exports = router
- */
+const usuariasSchema = new mongoose.Schema({
+    nome: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    senha: {
+        type: String,
+        required: true
+    }
+})
+
+module.exports = mongoose.model('usuarias', usuariaSchema)
