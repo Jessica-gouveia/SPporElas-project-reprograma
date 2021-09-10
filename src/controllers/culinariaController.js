@@ -1,29 +1,29 @@
 const mongoose = require('mongoose')
 
-const Food = require('../models/culinaria')
+const Culinaria = require('../models/culinaria')
 
 const itinerary = require('../models/cultural')
 
 const getAll = async (req,res) => {
-    const foodPlaces = await Food.find().populate('cultural')
+    const foodPlaces = await Culinaria.find().populate('cultural')
     res.status(200).json(foodPlaces)
 }
 
 const getAllLaerte = async (req,res) => {
-    const foodPlaces = await Food.find().populate('cultural')
+    const foodPlaces = await Culinaria.find().populate('cultural')
     const filteredFood = foodPlaces.filter(food => food.itinerary.nome == 'Laerte')
     res.status(200).json(filteredFood)
 }
 
 const getAllRaquel = async (req,res) => {
-    const foodPlaces = await Food.find().populate('cultural')
+    const foodPlaces = await Culinaria.find().populate('cultural')
     const filteredFood = foodPlaces.filter(food => food.itinerary.nome == 'Raquel')
     res.status(200).json(filteredFood)
 }
 
 const getById = async (req,res) => {
     const requestedId = req.params.id 
-    const filteredId = await Food.find({id: requestedId})
+    const filteredId = await Culinaria.find({id: requestedId})
     if(filteredId) {
         res.json(filteredId)
     } else {
@@ -35,9 +35,9 @@ const getById = async (req,res) => {
 }
 
 const createRestaurant = async (req,res) => {
-    const restaurants = new Restaurant ({
+    const culinarias = new Culinaria ({
         _id: new mongoose.Types.ObjectId(),
-        nome: req.body.name,
+        nome: req.body.nome,
         endereco: req.body.endereco,
         funcionamento: req.body.funcionamento,
         cultural: req.body.cultural,
@@ -45,12 +45,12 @@ const createRestaurant = async (req,res) => {
 
     })
 
-    const restaurantAlreadyExists = await itinerary.findOne({nome: req.body.nome})
+    const restaurantAlreadyExists = await Culinaria.findOne({nome: req.body.nome})
     if(restaurantAlreadyExists) {
         return res.status(404).json({error: 'Restaurant already registered'})
     }
     try{
-        const newRestaurant = await restaurant.save()
+        const newRestaurant = await Culinaria.save()
         res.status(200).json(newRestaurant)
     } catch (error) {
         res.status(400).json({'message': error.message})
@@ -58,15 +58,15 @@ const createRestaurant = async (req,res) => {
 // INCLUIR LISTA DE RESTAURANTES  
     const restaurantIncluding = async (req,res) => {
         try {
-            const restaurantInsert = await Food.findById(req.params.id)
+            const restaurantInsert = await Culinaria.findById(req.params.id)
             if(restaurantInsert == null) {
                 return res.status(400).json({'message': 'Restaurant not found'})
             } else {
-                Food.findByIdAndUpdate(
+                Culinaria.findByIdAndUpdate(
                     {_id: req.body.id},
                     {...restaurantIncluding},
                     {$push: {restaurante: req.body.restaurante}})
-                    Food.populate('restaurante')
+                    Culinaria.populate('restaurantes')
                     res.status(200).json({'message': 'Restaurant succesfully added', restaurantInsert})
                 
             }
@@ -79,7 +79,7 @@ const createRestaurant = async (req,res) => {
 }
 
 const updateAnythingRestaurant = async (req,res) => {
-    const food = await Food.findById(req.params.id)
+    const food = await Culinaria.findById(req.params.id)
     if(food == null) {
         return res.status(404).json({'message': 'Information not found, please try again'})
     }
@@ -95,7 +95,7 @@ const updateAnythingRestaurant = async (req,res) => {
 }
 
 const deleteRestaurant = async (req,res) => {
-    const foodPlaces = await Food.findById(req.params.id)
+    const foodPlaces = await Culinaria.findById(req.params.id)
     if(foodPlaces == null) {
         return res.status(404).json({'message': 'Restaurant not found'})
     }

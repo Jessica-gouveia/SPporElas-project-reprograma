@@ -17,8 +17,7 @@ const culinariaSchema = new mongoose.Schema({
         },
         cultural: {
             type: mongoose.Schema.Types.ObjectId,
-            required: true,
-            ref: 'cultural',
+            ref: 'cultural'
         },
         criadoEm: {
             type: Date,
@@ -26,6 +25,7 @@ const culinariaSchema = new mongoose.Schema({
             default: new Date
         }
     }]
-})
+    
+},{strictPopulate: false})
 
 module.exports = mongoose.model('culinaria', culinariaSchema)
