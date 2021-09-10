@@ -34,8 +34,7 @@ const createRestaurant = async (req,res) => {
     } catch (err) {
         res.status(400).json({'message': err.message})
     }
-// INCLUIR LISTA DE RESTAURANTES  
- 
+  
       const restaurantIncluding = async (req,res) => {
         try {
             const restaurantInsert = await Culinaria.findById(req.parms.id)

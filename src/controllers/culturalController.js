@@ -1,5 +1,8 @@
 const mongoose = require('mongoose')
 const Itinerary = require('../models/cultural')
+const jwt = require('jsonwebtoken')
+const SECRET = process.env.SECRET
+
 
 const getAll = async (req,res) => {
     const cultureTour = await Itinerary.find()
@@ -20,6 +23,19 @@ const getById = async (req,res) => {
 }
 
 const createItinerary = async (req,res) => {
+
+    const authHeader = req.get('authorization')
+    const token = authHeader.split(' ')[1]
+    if(authHeader == undefined) {
+        return res.status(403).send({message: "Please send an authorization"})
+    }
+    jwt.verify(token, SECRET, async (err) => {
+        if(err){
+          res.status(403).send({message: "invalid token", err})
+        }
+        const itineraryPlace = await Itinerary.find()
+    })
+
     const itinerary = new Itinerary ({
         _id: new mongoose.Types.ObjectId(),
         nome: req.body.nome,
@@ -146,6 +162,20 @@ const updateAnything = async (req,res) => {
 }
 
 const deleteItinerary = async (req,res) => {
+
+    const authHeader = req.get('authorization')
+    const token = authHeader.split(' ')[1]
+    if(authHeader == undefined){
+        return res.status(403).send({'message': 'Please send an authorization'})
+    }
+    jwt.verify(token, SECRET, async (err)=> {
+        if(err){
+            res.status(403).send({message: "Invalid token"})
+        }
+        const itineraryPlace = await Itinerary.find()
+        res.json(itineraryPlace)
+    })
+  
     const cultureTour = await Itinerary.findById(req.params.id)
     if(cultureTour == null) {
         return res.status(404).json({'message': 'Itinerary not found'})
