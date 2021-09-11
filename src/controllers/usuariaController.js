@@ -28,7 +28,7 @@ const login = (req,res) => {
             return res.status(401).send({'message': 'Unauthorized login '})
         }
         const token = jwt.sign({email: req.body.email}, SECRET)
-        res.status(200).send({'message': 'Login successfully'})
+        res.status(200).send({'message': 'Login successfully', token: token})
     })
 }
 
